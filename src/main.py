@@ -42,9 +42,6 @@ class WindowClass(QMainWindow, form_class):
 
         self.driver_trigger=Communicate()
         self.driver_trigger.signal.connect(self.SettingByDriver)
-        
-        x=[0, 1, 2]
-        y=[0, 1, 2]
 
         self.laps_left=29
         self.current_lap=1
@@ -54,14 +51,14 @@ class WindowClass(QMainWindow, form_class):
     def emitSignalFromDriver(self,data):
         self.driver_trigger.run(data)
 
+    # choose_item 항목을 선택했을 때 실행되는 콜백 함수
     def onActivated(self,text):
         self.text=text
         if (text=="Clear"):
             self.plotter.clear_plot()
-        
-        elif(text!="그래프 출력"):
-            self.plotter.pw1.setTitle(text)
-            self.plotter.pw1
+            self.plotter.pw1.setTitle("")
+        elif (text!="그래프 출력"):
+            self.plotter.pw1.setTitle(self.text)
 
     @pyqtSlot(DrivingData)     
     def SettingByDriver(self, data):
@@ -98,9 +95,26 @@ class WindowClass(QMainWindow, form_class):
         self.torque_table.setItem(3, 1, QTableWidgetItem(str(data.f_motor_torque_RR_ms)))        
 
         #그래프
-        if(self.text=="쓰로틀"):
+        if      (self.text=="쓰로틀"):
             self.plotter.addValue(data.i_throttle)
-            
+        elif    (self.text=="차량 속도") :
+            self.plotter.addValue(data.f_car_velocity_ms)
+        elif    (self.text=="FL 속도") :
+            self.plotter.addValue(data.f_wheel_velocity_FL_ms)
+        elif    (self.text=="FR 속도") :
+            self.plotter.addValue(data.f_wheel_velocity_FR_ms)
+        elif    (self.text=="RL 속도") :
+            self.plotter.addValue(data.f_wheel_velocity_RL_ms)    
+        elif    (self.text=="RR 속도") :
+            self.plotter.addValue(data.f_wheel_velocity_RR_ms)
+        elif    (self.text=="FL 토크") :
+            self.plotter.addValue(data.f_motor_torque_FL_Nm)
+        elif    (self.text=="FR 토크") :
+            self.plotter.addValue(data.f_motor_torque_FR_Nm)
+        elif    (self.text=="RL 토크") :
+            self.plotter.addValue(data.f_motor_torque_RL_Nm)
+        elif    (self.text=="RR 토크") :
+            self.plotter.addValue(data.f_motor_torque_RR_Nm)
 
 
 def callback(data, window):
