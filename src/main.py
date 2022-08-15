@@ -38,22 +38,33 @@ class WindowClass(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.choose_item.activated[str].connect(self.onActivated)
 
         self.driver_trigger=Communicate()
         self.driver_trigger.signal.connect(self.SettingByDriver)
+        
+        x=[0, 1, 2]
+        y=[0, 1, 2]
 
-        #Data init
         self.laps_left=29
         self.current_lap=1
         self.row=0
+        self.text="None"
     
     def emitSignalFromDriver(self,data):
         self.driver_trigger.run(data)
 
+    def onActivated(self,text):
+        self.text=text
+        if (text=="Clear"):
+            self.plotter.clear_plot()
+        
+        elif(text!="그래프 출력"):
+            self.plotter.pw1.setTitle(text)
+            self.plotter.pw1
+
     @pyqtSlot(DrivingData)     
     def SettingByDriver(self, data):
-        
-        #self.plotter
 
         # 한 lap 주행을 감지하면 주행 기록 표(laptimerlap)에 기록.
         if(data.lap!=self.current_lap):
@@ -84,16 +95,17 @@ class WindowClass(QMainWindow, form_class):
         self.torque_table.setItem(0, 1, QTableWidgetItem(str(data.f_motor_torque_FL_ms)))
         self.torque_table.setItem(1, 1, QTableWidgetItem(str(data.f_motor_torque_FR_ms)))
         self.torque_table.setItem(2, 1, QTableWidgetItem(str(data.f_motor_torque_RL_ms)))
-        self.torque_table.setItem(3, 1, QTableWidgetItem(str(data.f_motor_torque_RR_ms)))
-        
-        
+        self.torque_table.setItem(3, 1, QTableWidgetItem(str(data.f_motor_torque_RR_ms)))        
 
-        
+        #그래프
+        if(self.text=="쓰로틀"):
+            self.plotter.addValue(data.i_throttle)
+            
 
 
 def callback(data, window):
     print("callback")
-    window.emitSignal(data)
+    window.emitSignalFromDriver(data)
 
 def rosmain():
     signalGenerator=Communicate()

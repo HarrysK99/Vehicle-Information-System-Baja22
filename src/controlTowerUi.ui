@@ -167,42 +167,62 @@
    </property>
    <item>
     <property name="text">
-     <string>Throttle</string>
+     <string>그래프 출력</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>B</string>
+     <string>쓰로틀</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>C</string>
+     <string>FL 토크</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>D</string>
+     <string>FR 토크</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>New Item</string>
+     <string>RL 토크</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>New Item</string>
+     <string>RR 토크</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>New Item</string>
+     <string>차량 속도</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>New Item</string>
+     <string>FL 속도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FR 속도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RL 속도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RR 속도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Clear</string>
     </property>
    </item>
   </widget>
