@@ -69,7 +69,7 @@ class WindowClass(QMainWindow, form_class):
     def SettingByDriver(self, data):
 
         # liveMonitor 
-        self.liveMonitor.liveCarPoint.move_GPS(35.9468499, 126.5906311)
+        self.liveMonitor.liveCarPoint.move_GPS(data.latitude, data.longitude)
 
         # 한 lap 주행을 감지하면 주행 기록 표(laptimerlap)에 기록.
         if(data.lap!=self.current_lap):
