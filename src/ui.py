@@ -277,6 +277,9 @@ class Ui_Dialog(object):
         self.laptimerlap.verticalHeader().setVisible(False)
         self.laptimerlap.verticalHeader().setDefaultSectionSize(30)
         self.laptimerlap.verticalHeader().setHighlightSections(False)
+        self.live_monitor = Monitor(Dialog)
+        self.live_monitor.setGeometry(QtCore.QRect(0, 0, 800, 900))
+        self.live_monitor.setObjectName("live_monitor")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -365,6 +368,7 @@ class Ui_Dialog(object):
         self.laptimerlap.setSortingEnabled(False)
         self.laptimerlap.setSortingEnabled(__sortingEnabled)
 from graphWidget import GraphWidget
+from monitor import Monitor
 
 
 if __name__ == "__main__":

@@ -24,15 +24,11 @@ class GraphWidget(QWidget):
 
         self.p1=self.pw1.plot(pen='w')
 
-        self.mytimer=QTimer()
-
         self.data_type="None"
 
     def draw_init(self,text):
         self.data_type=text
-        self.mytimer.start(125)
-        self.mytimer.timeout.connect(self.get_data)
-
+        
         self.draw_chart(self.x,self.y)
         self.show()
 
@@ -49,16 +45,10 @@ class GraphWidget(QWidget):
         for i in range(cnt):
             new_y.append(random.random()%60)
 
-
-    @pyqtSlot()
-    def get_data(self):
-        
-        data: str = time.strftime("%S",time.localtime())
-
+    def addValue(self,data):
         last_x=self.x[-1]
-        self.x.append(last_x+1)
-
-        self.y.append(int(data))
+        self.x.append(last_x+0.125)
+        self.y.append(data)
         self.draw_chart(self.x,self.y)
 
 if __name__=="__main__":

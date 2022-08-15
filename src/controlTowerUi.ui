@@ -730,12 +730,28 @@
     </property>
    </item>
   </widget>
+  <widget class="Monitor" name="live_monitor" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>900</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>GraphWidget</class>
    <extends>QWidget</extends>
    <header location="global">graphWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Monitor</class>
+   <extends>QWidget</extends>
+   <header location="global">monitor</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
