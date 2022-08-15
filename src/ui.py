@@ -9,6 +9,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from monitor import GPS, PointLabel, CarPointLabel, MonitorManager
+
+
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -277,12 +281,18 @@ class Ui_Dialog(object):
         self.laptimerlap.verticalHeader().setVisible(False)
         self.laptimerlap.verticalHeader().setDefaultSectionSize(30)
         self.laptimerlap.verticalHeader().setHighlightSections(False)
-        self.live_monitor = Monitor(Dialog)
-        self.live_monitor.setGeometry(QtCore.QRect(0, 0, 800, 900))
-        self.live_monitor.setObjectName("live_monitor")
+
+
+        # 유빈 liveMonitor
+        self.liveMonitor = 
+        
+
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    
+        
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -368,7 +378,6 @@ class Ui_Dialog(object):
         self.laptimerlap.setSortingEnabled(False)
         self.laptimerlap.setSortingEnabled(__sortingEnabled)
 from graphWidget import GraphWidget
-from monitor import Monitor
 
 
 if __name__ == "__main__":
