@@ -13,6 +13,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
 
+from monitor import *
+
 #UI파일 연결
 #UI파일과 py코드 파일은 같은 디렉토리에 위치
 form_class = uic.loadUiType("controlTowerUi.ui")[0]
@@ -47,6 +49,9 @@ class WindowClass(QMainWindow, form_class):
         self.current_lap=1
         self.row=0
         self.text="None"
+
+        self.liveMonitor = MonitorManager(self)
+
     
     def emitSignalFromDriver(self,data):
         self.driver_trigger.run(data)
@@ -62,6 +67,9 @@ class WindowClass(QMainWindow, form_class):
 
     @pyqtSlot(DrivingData)     
     def SettingByDriver(self, data):
+
+        # liveMonitor 
+        self.liveMonitor.liveCarPoint.move_GPS(data.latitude, data.longitude)
 
         # 한 lap 주행을 감지하면 주행 기록 표(laptimerlap)에 기록.
         if(data.lap!=self.current_lap):
