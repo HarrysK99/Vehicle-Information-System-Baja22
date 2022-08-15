@@ -1,5 +1,4 @@
 
-from msilib.schema import Dialog
 import sys
 import json
 from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QHBoxLayout, QVBoxLayout, QLabel, QPushButton
@@ -32,10 +31,11 @@ class PointLabel(QLabel):
 
     
 class CarPointLabel(QLabel):
-    def __init__(self, lat, lon, parent):
+    def __init__(self, lat, lon, parent, manager):
         super().__init__(parent)
         self.lat = lat
         self.lon = lon
+        self.manager = manager
         self.parent = parent
         self.setStyleSheet('background-color:#FF0000;')
         self.setFixedSize(21, 21)
@@ -43,17 +43,18 @@ class CarPointLabel(QLabel):
     def move_GPS(self, lat, lon ):
         self.lat = lat
         self.lon = lon
-        self.parent.moveWidget(self, self.parent.ratio, self.parent.avgGPS)
+        self.manager.moveWidget(self, self.manager.ratio, self.manager.avgGPS)
+        self.raise_()
         self.move(self.x() - 8, self.y() - 8)
 
 class MonitorManager():
     def __init__(self, parent):
         arr = json.loads(self.readJSON())
         self.parent = parent
-        self.avgGPS = self.calcAVG_GPS(arr)
-        self.liveCarPoint = CarPointLabel(avgGPS.latitude, avgGPS.longitude, parent)
-        self.liveCarPoint.move_GPS(avgGPS.latitude, avgGPS.longitude)
         self.ratio = self.calcRatio(arr)
+        self.avgGPS = self.calcAVG_GPS(arr)
+        self.liveCarPoint = CarPointLabel(avgGPS.latitude, avgGPS.longitude, parent, self)
+        self.liveCarPoint.move_GPS(avgGPS.latitude, avgGPS.longitude)
         for obj in arr:
             self.moveWidget(PointLabel( obj['latitude'], obj['longitude'], parent), self.ratio, self.avgGPS)
 

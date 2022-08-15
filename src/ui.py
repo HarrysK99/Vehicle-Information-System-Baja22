@@ -284,7 +284,6 @@ class Ui_Dialog(object):
 
 
         # 유빈 liveMonitor
-        self.liveMonitor = 
         
 
 
