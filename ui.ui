@@ -723,15 +723,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GraphWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">graphwidget</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Monitor</class>
    <extends>QWidget</extends>
    <header location="global">monitor</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GraphWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">graphWidget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

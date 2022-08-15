@@ -3,24 +3,23 @@ import pyqtgraph as pg
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, QObject, Qt, QThread, QTimer
 
-
 import time, random
 
 
-class MplCanvas(QWidget):
+class ExMain(QWidget):
     def __init__(self):
         super().__init__()
 
-        #hbox = QHBoxLayout()
+        hbox = QHBoxLayout()
         self.pw1 = pg.PlotWidget(title="line chart")
 
-        #hbox.addWidget(self.pw1)
+        hbox.addWidget(self.pw1)
         #hbox.addWidget(self.pw2)
         #hbox.addWidget(self.pw3)
-        #self.setLayout(hbox)
+        self.setLayout(hbox)
 
         #self.setGeometry(300, 100, 800, 500)  # x, y, width, height
-        #self.setWindowTitle("pyqtgraph 예제 - realtime")
+        self.setWindowTitle("pyqtgraph 예제 - realtime")
 
         self.x = [1, 2, 3]
         self.y = [4, 5, 6]
@@ -63,10 +62,12 @@ class MplCanvas(QWidget):
         self.y.append(int(data))
         self.draw_chart(self.x, self.y)
 
-class GraphWidget(QWidget):
-    def __init__(self,parent=None):
-        QWidget.__init__(self,parent)
-        self.canvas=MplCanvas()
-        self.hbox=QHBoxLayout()
-        self.hbox.addWidget(self.canvas)
-        self.setLayout(self.hbox)
+
+if __name__ == "__main__":
+    import sys
+
+    app = QApplication(sys.argv)
+
+    ex = ExMain()
+
+    sys.exit(app.exec_())

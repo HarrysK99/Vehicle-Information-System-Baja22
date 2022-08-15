@@ -13,16 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="Monitor" name="live_monitor" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>900</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="GraphWidget" name="plotter" native="true">
    <property name="geometry">
     <rect>
@@ -545,7 +535,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QTableWidget" name="laptimeperlap">
+  <widget class="QTableWidget" name="laptimerlap">
    <property name="geometry">
     <rect>
      <x>810</x>
@@ -725,13 +715,7 @@
   <customwidget>
    <class>GraphWidget</class>
    <extends>QWidget</extends>
-   <header location="global">graphwidget</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Monitor</class>
-   <extends>QWidget</extends>
-   <header location="global">monitor</header>
+   <header location="global">graphWidget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
