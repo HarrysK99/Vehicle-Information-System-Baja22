@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'CTui.ui'
+# Form implementation generated from reading ui file 'controlTowerUi.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #
@@ -14,9 +14,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1600, 900)
-        #self.live_monitor = Monitor(Dialog)
-        #self.live_monitor.setGeometry(QtCore.QRect(0, 0, 800, 900))
-        #self.live_monitor.setObjectName("live_monitor")
+        self.live_monitor = Monitor(Dialog)
+        self.live_monitor.setGeometry(QtCore.QRect(0, 0, 800, 900))
+        self.live_monitor.setObjectName("live_monitor")
         self.plotter = GraphWidget(Dialog)
         self.plotter.setGeometry(QtCore.QRect(810, 0, 771, 441))
         self.plotter.setObjectName("plotter")
@@ -80,7 +80,6 @@ class Ui_Dialog(object):
         self.choose_item.addItem("")
         self.choose_item.addItem("")
         self.choose_item.addItem("")
-        self.choose_item.activated[str].connect(self.onchanged)
         self.velocity_table = QtWidgets.QTableWidget(Dialog)
         self.velocity_table.setGeometry(QtCore.QRect(810, 450, 411, 191))
         font = QtGui.QFont()
@@ -281,24 +280,6 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def onchanged(self,text):
-        if(text=="Throttle"):
-            self.plot_data1()
-
-        if(text=="C"):
-            self.clear_data1()
-        
-
-    def plot_data1(self):
-        x=range(0,10)
-        y=[1,5,3,2,4,7,6,5,3,2]
-        self.plotter.canvas.ax.plot(x,y,label="1")
-        self.plotter.canvas.draw()
-
-    def clear_data1(self):
-        self.graph1.canvas.ax.clear()
-        self.graph1.canvas.draw()
-
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -378,8 +359,8 @@ class Ui_Dialog(object):
         __sortingEnabled = self.laptimeperlap.isSortingEnabled()
         self.laptimeperlap.setSortingEnabled(False)
         self.laptimeperlap.setSortingEnabled(__sortingEnabled)
-from graphWidget import GraphWidget
-#from monitor import Monitor
+from graphwidget import GraphWidget
+from monitor import Monitor
 
 
 if __name__ == "__main__":
