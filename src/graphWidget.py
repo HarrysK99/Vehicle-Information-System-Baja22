@@ -26,9 +26,9 @@ class GraphWidget(QWidget):
         self.show()
 
     def clear_plot(self):
-        self.pw1.clear()
         self.x=[0]
         self.y=[0]
+        self.draw_chart(self.x,self.y)
 
     def draw_chart(self,x,y):
         self.p1.setData(x=x,y=y)

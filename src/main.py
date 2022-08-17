@@ -12,7 +12,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 from monitor import *
 
 #UI파일 연결
@@ -29,13 +29,6 @@ class Communicate(QObject):
 #화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class):
 
-    time = 0
-    row = 0
-    lap = 0
-    start_time=0
-    end_time=0
-    delta=0
-    time_table=[]
 
     def __init__(self):
         super().__init__()
@@ -59,48 +52,52 @@ class WindowClass(QMainWindow, form_class):
     # choose_item 항목을 선택했을 때 실행되는 콜백 함수
     def onActivated(self,text):
         self.text=text
+        self.plotter.clear_plot()
         if (text=="Clear"):
-            self.plotter.clear_plot()
             self.plotter.pw1.setTitle("")
         elif (text!="그래프 출력"):
             self.plotter.pw1.setTitle(self.text)
 
     @pyqtSlot(DrivingData)     
     def SettingByDriver(self, data):
+        _translate=QtCore.QCoreApplication.translate
 
         # liveMonitor 
         self.liveMonitor.liveCarPoint.move_GPS(data.latitude, data.longitude)
 
         # 한 lap 주행을 감지하면 주행 기록 표(laptimerlap)에 기록.
         if(data.lap!=self.current_lap):
-            self.laptimerlap.setItem(self.row, 0, QTableWidgetItem(str(self.lap)))
-            self.laptimerlap.setItem(self.row, 1, QTableWidgetItem(data.lap_time_prev))
+            self.laptimerlap.item(self.row,0).setText(_translate("Dialog",str(self.current_lap)))
+            self.laptimerlap.item(self.row,1).setText(_translate("Dialog",data.lap_time_prev))
             self.current_lap+=1
             self.laps_left-=1
             self.row+=1
         
         #현재 랩과 랩타임
-        self.laptimerlap.setItem(self.row,0,QTableWidgetItem(str(data.lap)))
-        self.laptimerlap.setItem(self.row,0,QTableWidgetItem(data.lap_time_cur))
+        self.laptimerlap.item(self.row,0).setText(_translate("Dialog",str(self.current_lap)))
+        self.laptimerlap.item(self.row,1).setText(_translate("Dialog",data.lap_time_cur))
+
+        #총 주행시간
+        self.total_time_table.item(0,1).setText(_translate("Dialog",data.total_time))
 
         #현재 랩 수
-        self.lap_count.setItem(0,1,QTableWidgetItem(str(self.lap)))
+        self.lap_count_table.item(0,1).setText(_translate("Dialog",str(self.current_lap)))
 
         #남은 랩 수
-        self.laps_left.setItem(0,1,QTableWidgetItem(str(self.laps_left)))
+        self.laps_left_table.item(0,1).setText(_translate("Dialog",str(self.laps_left)))
         
         # 속도
-        self.velocity_table.setItem(0, 1, QTableWidgetItem(str(data.f_car_velocity_ms)))
-        self.velocity_table.setItem(1, 1, QTableWidgetItem(str(data.f_wheel_velocity_FL_ms)))
-        self.velocity_table.setItem(2, 1, QTableWidgetItem(str(data.f_wheel_velocity_FR_ms)))
-        self.velocity_table.setItem(3, 1, QTableWidgetItem(str(data.f_wheel_velocity_RL_ms)))
-        self.velocity_table.setItem(4, 1, QTableWidgetItem(str(data.f_wheel_velocity_RR_ms)))
+        self.velocity_table.item(0,1).setText(_translate("Dialog",str(data.f_car_velocity_ms)))
+        self.velocity_table.item(1,1).setText(_translate("Dialog",str(data.f_wheel_velocity_FL_ms)))
+        self.velocity_table.item(2,1).setText(_translate("Dialog",str(data.f_wheel_velocity_FR_ms)))
+        self.velocity_table.item(3,1).setText(_translate("Dialog",str(data.f_wheel_velocity_RL_ms)))
+        self.velocity_table.item(4,1).setText(_translate("Dialog",str(data.f_wheel_velocity_RR_ms)))
         
         # 토크
-        self.torque_table.setItem(0, 1, QTableWidgetItem(str(data.f_motor_torque_FL_ms)))
-        self.torque_table.setItem(1, 1, QTableWidgetItem(str(data.f_motor_torque_FR_ms)))
-        self.torque_table.setItem(2, 1, QTableWidgetItem(str(data.f_motor_torque_RL_ms)))
-        self.torque_table.setItem(3, 1, QTableWidgetItem(str(data.f_motor_torque_RR_ms)))        
+        self.torque_table.item(0,1).setText(_translate("Dialog",str(data.f_motor_torque_FL_Nm)))
+        self.torque_table.item(1,1).setText(_translate("Dialog",str(data.f_motor_torque_FR_Nm)))
+        self.torque_table.item(2,1).setText(_translate("Dialog",str(data.f_motor_torque_RL_Nm)))
+        self.torque_table.item(3,1).setText(_translate("Dialog",str(data.f_motor_torque_RR_Nm)))
 
         #그래프
         if      (self.text=="쓰로틀"):
