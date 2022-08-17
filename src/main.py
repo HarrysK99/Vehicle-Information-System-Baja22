@@ -67,8 +67,10 @@ class WindowClass(QMainWindow, form_class):
 
         # 한 lap 주행을 감지하면 주행 기록 표(laptimerlap)에 기록.
         if(data.lap!=self.current_lap):
-            self.laptimerlap.item(self.row,0).setText(_translate("Dialog",str(self.current_lap)))
+            #self.laptimerlap.item(self.row,0).setText(_translate("Dialog",str(self.current_lap)))
+            self.laptimerlap.item(self.row, 0).setText(_translate("Dialog",str(self.current_lap)))
             self.laptimerlap.item(self.row,1).setText(_translate("Dialog",data.lap_time_prev))
+            #self.laptimerlap.item(self.row,1).setText(_translate("Dialog",data.lap_time_prev))
             self.current_lap+=1
             self.laps_left-=1
             self.row+=1
@@ -123,7 +125,6 @@ class WindowClass(QMainWindow, form_class):
 
 
 def callback(data, window):
-    print("callback")
     window.emitSignalFromDriver(data)
 
 def rosmain():
