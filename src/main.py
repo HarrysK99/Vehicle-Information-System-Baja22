@@ -3,11 +3,10 @@
 
 from __future__ import print_function
 from curses import intrflush
-import time
-import rospy
-from option_system.msg import DrivingData
 
-import math
+import rospy
+from driver_system.msg import DrivingData
+
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -17,7 +16,7 @@ from monitor import *
 
 #UI파일 연결
 #UI파일과 py코드 파일은 같은 디렉토리에 위치
-form_class = uic.loadUiType("controlTowerUi.ui")[0]
+form_class = uic.loadUiType("./ui/controlTowerUi.ui")[0]
 
 #Driver to Control Tower Communicate
 class Communicate(QObject):

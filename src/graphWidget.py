@@ -18,8 +18,6 @@ class GraphWidget(QWidget):
         self.x=[0]
         self.y=[0]
 
-        self.pw1.enableAutoRange()
-
         self.p1=self.pw1.plot(pen='w')
         
         self.draw_chart(self.x,self.y)
@@ -31,6 +29,8 @@ class GraphWidget(QWidget):
         self.draw_chart(self.x,self.y)
 
     def draw_chart(self,x,y):
+        last_x=self.x[-1]
+        self.pw1.setXRange(last_x-10, last_x +1)
         self.p1.setData(x=x,y=y)
 
     def addValue(self,data):
