@@ -75,8 +75,8 @@ class MonitorManager():
         minIndex = 0
         minSquare = 200000.0
         for i in range(len(dataArr)):
-            dlat_2 =  pow(float(targetPoint.latitude), 2) + pow(float(dataArr[i].lat), 2)
-            dlon_2 =  pow(float(targetPoint.longitude), 2) + pow(float(dataArr[i].lon), 2)
+            dlat_2 =  pow(targetPoint.latitude, 2) + pow(float(dataArr[i].lat), 2)
+            dlon_2 =  pow(targetPoint.longitude, 2) + pow(float(dataArr[i].lon), 2)
             if minSquare > dlat_2 + dlon_2:
                 minIndex = i
                 minSquare = dlat_2 + dlon_2
