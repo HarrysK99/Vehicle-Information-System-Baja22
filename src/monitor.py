@@ -10,7 +10,7 @@ import pyqtgraph.opengl as opengl
 
 
 class GPS():
-    def __init__(self, latitude, longitude, altitude):
+    def __init__(self, latitude, longitude, altitude=0):
         self.latitude = latitude
         self.longitude = longitude
         self.altitude = altitude
@@ -41,24 +41,47 @@ class CarPointLabel(QLabel):
         self.setFixedSize(21, 21)
 
     def move_GPS(self, lat, lon ):
-        self.lat = lat
-        self.lon = lon
+        point = self.manager.getClosestPointLabel(self.manager.pointWidgets, GPS(lat, lon))
+        self.lat = point.lat
+        self.lon = point.lon
         self.manager.moveWidget(self, self.manager.ratio, self.manager.avgGPS)
         self.raise_()
         self.move(self.x() - 8, self.y() - 8)
+        self.lat = lat
+        self.lon = lon
+
+    def mouseMoveEvent(self, ev:QtGui.QMouseEvent) -> None:
+        print("[현위치] 위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
 
 class MonitorManager():
+    
+
     def __init__(self, parent):
         arr = json.loads(self.readJSON())
+        
         self.parent = parent
         self.ratio = self.calcRatio(arr)
         self.avgGPS = self.calcAVG_GPS(arr)
+        self.pointWidgets = []
         self.liveCarPoint = CarPointLabel(avgGPS.latitude, avgGPS.longitude, parent, self)
         self.liveCarPoint.move_GPS(avgGPS.latitude, avgGPS.longitude)
         for obj in arr:
-            self.moveWidget(PointLabel( obj['latitude'], obj['longitude'], parent), self.ratio, self.avgGPS)
+            point = PointLabel( obj['latitude'], obj['longitude'], self)
+            self.pointWidgets.append(point)
+            self.moveWidget(point, self.ratio, self.avgGPS)
 
-        
+        # returns closests point from point
+    def getClosestsPointLabel(self, dataArr, targetPoint):
+        minIndex = 0
+        minSquare = 200000.0
+        for i in range(len(dataArr)):
+            dlat_2 =  pow(float(targetPoint.latitude), 2) + pow(float(dataArr[i].lat), 2)
+            dlon_2 =  pow(float(targetPoint.longitude), 2) + pow(float(dataArr[i].lon), 2)
+            if minSquare > dlat_2 + dlon_2:
+                minIndex = i
+                minSquare = dlat_2 + dlon_2
+        return dataArr[minIndex]
+
     def calcRatio(self, dataArr):
         minlat = 9999.0
         maxlat = 0.0
@@ -73,6 +96,8 @@ class MonitorManager():
         
         ratio = 700.0 / max(maxlat - minlat, maxlon - minlon)
         return ratio
+
+    
             
 
     def readJSON(self):
