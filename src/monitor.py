@@ -47,8 +47,10 @@ class CarPointLabel(QLabel):
         self.manager.moveWidget(self, self.manager.ratio, self.manager.avgGPS)
         self.raise_()
         self.move(self.x() - 8, self.y() - 8)
+
         self.lat = lat
         self.lon = lon
+        print("위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
 
     def mouseMoveEvent(self, ev:QtGui.QMouseEvent) -> None:
         print("[현위치] 위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
@@ -63,15 +65,15 @@ class MonitorManager():
         self.ratio = self.calcRatio(arr)
         self.avgGPS = self.calcAVG_GPS(arr)
         self.pointWidgets = []
-        self.liveCarPoint = CarPointLabel(avgGPS.latitude, avgGPS.longitude, parent, self)
-        self.liveCarPoint.move_GPS(avgGPS.latitude, avgGPS.longitude)
         for obj in arr:
-            point = PointLabel( obj['latitude'], obj['longitude'], self)
+            point = PointLabel( obj['latitude'], obj['longitude'], parent)
             self.pointWidgets.append(point)
             self.moveWidget(point, self.ratio, self.avgGPS)
+        self.liveCarPoint = CarPointLabel(avgGPS.latitude, avgGPS.longitude, parent, self)
+        self.liveCarPoint.move_GPS(avgGPS.latitude, avgGPS.longitude)
 
         # returns closests point from point
-    def getClosestsPointLabel(self, dataArr, targetPoint):
+    def getClosestPointLabel(self, dataArr, targetPoint):
         minIndex = 0
         minSquare = 200000.0
         for i in range(len(dataArr)):
