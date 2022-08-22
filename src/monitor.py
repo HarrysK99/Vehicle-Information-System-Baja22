@@ -1,4 +1,5 @@
 
+from pickle import decode_long
 import sys
 import json
 from PyQt5.QtWidgets import QApplication, QWidget, QFrame, QHBoxLayout, QVBoxLayout, QLabel, QPushButton
@@ -15,7 +16,7 @@ class GPS():
         self.longitude = longitude
         self.altitude = altitude
 
-avgGPS = GPS(35.94669525695068, 126.59118543077346, 0)
+avgGPS = GPS(37.5417714, 127.07913649999999, 0)
 
 class PointLabel(QLabel):
     def __init__(self, lat, lon, parent):
@@ -36,6 +37,7 @@ class CarPointLabel(QLabel):
         self.lat = lat
         self.lon = lon
         self.manager = manager
+        self.setMouseTracking(True)
         self.parent = parent
         self.setStyleSheet('background-color:#FF0000;')
         self.setFixedSize(21, 21)
@@ -50,7 +52,7 @@ class CarPointLabel(QLabel):
 
         self.lat = lat
         self.lon = lon
-        print("위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
+        print("[이동] 위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
 
     def mouseMoveEvent(self, ev:QtGui.QMouseEvent) -> None:
         print("[현위치] 위도 : " + str(self.lat) + " 경도 : " + str(self.lon))
@@ -77,11 +79,14 @@ class MonitorManager():
         minIndex = 0
         minSquare = 200000.0
         for i in range(len(dataArr)):
-            dlat_2 =  pow(targetPoint.latitude, 2) + pow(float(dataArr[i].lat), 2)
-            dlon_2 =  pow(targetPoint.longitude, 2) + pow(float(dataArr[i].lon), 2)
+            dlat_2 =  abs(targetPoint.latitude - float(dataArr[i].lat))
+            dlon_2 =  abs(targetPoint.longitude - float(dataArr[i].lon))
             if minSquare > dlat_2 + dlon_2:
                 minIndex = i
                 minSquare = dlat_2 + dlon_2
+                print("위도 : " + str(dataArr[minIndex].lat) + " 경도 : " + str(dataArr[minIndex].lon))
+                print(str(dlat_2) + " " + str(dlon_2))  
+                print(minSquare)
         return dataArr[minIndex]
 
     def calcRatio(self, dataArr):
