@@ -5,7 +5,8 @@ from __future__ import print_function
 from curses import intrflush
 
 import rospy
-from driver_system.msg import DrivingData
+from driver_system.msg import DrivingData, Message
+import time
 
 import sys
 from PyQt5.QtWidgets import *
@@ -13,6 +14,10 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 from PyQt5 import QtCore, QtGui, QtWidgets
 from monitor import *
+
+pub=rospy.Publisher('controlTowerMessage', Message, queue_size=1)
+pub_msg=Message()
+pub_msg.flag=0
 
 #UI파일 연결
 #UI파일과 py코드 파일은 같은 디렉토리에 위치
@@ -41,10 +46,26 @@ class WindowClass(QMainWindow, form_class):
         self.current_lap=1
         self.row=0
         self.text="None"
-
+        self.message=""
         self.liveMonitor = MonitorManager(self)
 
+    def pushClicked(self):
+        global pub, pub_msg
+        pub_msg.data=self.lineEdit.text()
+        pub_msg.flag=1
+        print(pub_msg.data)
+        pub.publish(pub_msg)
+
+        time.sleep(5)
+        pub_msg.flag=0
+        pub.publish(pub_msg)
     
+    def clearClicked(self):
+        global pub, pub_msg
+        self.lineEdit.clear()
+        pub_msg.flag=0
+        pub.publish(pub_msg)
+
     def emitSignalFromDriver(self,data):
         self.driver_trigger.run(data)
 
@@ -132,6 +153,9 @@ def rosmain():
     app = QApplication(sys.argv)
     #WindowClass의 인스턴스 생성
     myWindow = WindowClass()
+
+    myWindow.pushButton.clicked.connect(myWindow.pushClicked)
+    myWindow.clearButton.clicked.connect(myWindow.clearClicked)
 
     rospy.init_node('control_tower', anonymous=False)
     rospy.Subscriber('driving_data', DrivingData, callback, myWindow)
