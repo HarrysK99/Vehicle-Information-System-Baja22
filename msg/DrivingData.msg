@@ -1,0 +1,14 @@
+float32 f_wheel_velocity_FL_ms
+float32 f_wheel_velocity_FR_ms
+float32 f_wheel_velocity_RL_ms
+float32 f_wheel_velocity_RR_ms
+float32 f_car_velocity_ms
+float32 f_motor_torque_FL_Nm
+float32 f_motor_torque_FR_Nm
+float32 f_motor_torque_RL_Nm
+float32 f_motor_torque_RR_Nm
+int32 i_throttle
+int8 lap
+string total_time
+string lap_time_cur
+string lap_time_prev
