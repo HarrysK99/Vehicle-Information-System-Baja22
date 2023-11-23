@@ -1,60 +1,8 @@
-# 차량 인포메이션 시스템
+<div align="justify">
+<h2>차량 인포메이션 시스템</h2>
+  
+**2022 Baja KSAE 대학생 자작자동차 대회 Baja 부문** 출전을 위해 수행했던 프로젝트입니다.
 
-<p align="center">
-  <br>
-  <img src="./images/common/logo-sample.jpeg">
-  <br>
-</p>
+주행 중인 차량의 속도, 배터리 전압 및 각 바퀴의 토크 세기 등을 차량에 설치된 계기 모니터로 확인할 수 있습니다.
 
-목차
-
-## 프로젝트 소개
-
-<p align="justify">
-프로젝트 개요/동기
-</p>
-
-<p align="center">
-GIF Images
-</p>
-
-<br>
-
-## 기술 스택
-
-| JavaScript | TypeScript |  React   |  Node   |
-| :--------: | :--------: | :------: | :-----: |
-|   ![js]    |   ![ts]    | ![react] | ![node] |
-
-<br>
-
-## 구현 기능
-
-### 기능 1
-
-### 기능 2
-
-### 기능 3
-
-### 기능 4
-
-<br>
-
-## 배운 점 & 아쉬운 점
-
-<p align="justify">
-
-</p>
-
-<br>
-
-## 라이센스
-
-MIT &copy; [NoHack](mailto:lbjp114@gmail.com)
-
-<!-- Stack Icon Refernces -->
-
-[js]: /images/stack/javascript.svg
-[ts]: /images/stack/typescript.svg
-[react]: /images/stack/react.svg
-[node]: /images/stack/node.svg
+뿐만 아니라 패독의 프로그램과 채팅 송수신 기능이 있어 패독에서 보내는 메시지를 수신할 수 있습니다.
